@@ -14,7 +14,7 @@ release=get('https://api.github.com/repos/'+repo+'/releases/latest').json()
 assert release['tag_name']=='v0.3.0' and not release['draft']
 manifest=json.loads((base/'release-manifest.json').read_text())
 expected={p['file']:(p['bytes'],p['sha256']) for p in manifest['parts']}
-for name in ('合并整合包.cmd','Merge-Package.ps1','release-manifest.json','SHA256SUMS.txt'):
+for name in ('Merge-Package.cmd','Merge-Package.ps1','release-manifest.json','SHA256SUMS.txt'):
     path=base/name
     expected[name]=(path.stat().st_size,hashlib.sha256(path.read_bytes()).hexdigest())
 remote={a['name']:a for a in release['assets']}

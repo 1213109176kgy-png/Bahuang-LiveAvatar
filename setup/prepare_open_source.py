@@ -34,9 +34,9 @@ for project in ('LiveTalking','Qwen3-TTS','faster-qwen3-tts-0.2.6'):
 example=default.copy();example.update(avatar_id='',default_avatar_id='',backup_avatar_id='')
 (SOURCE/'config/local.example.json').write_text(json.dumps(example,ensure_ascii=False,indent=2),encoding='utf-8')
 (SOURCE/'setup').mkdir(exist_ok=True)
-for name in ('sources.json','requirements-windows-lock.txt','prepare_open_source.py','publish_github.py','verify_public_release.py','Merge-Package.ps1','合并整合包.cmd','release-notes.md'):
+for name in ('sources.json','requirements-windows-lock.txt','prepare_open_source.py','publish_github.py','verify_public_release.py','Merge-Package.ps1','Merge-Package.cmd','release-notes.md'):
     if (ROOT/'setup'/name).exists():shutil.copy2(ROOT/'setup'/name,SOURCE/'setup'/name)
-for name in ('Merge-Package.ps1','合并整合包.cmd','release-notes.md'):
+for name in ('Merge-Package.ps1','Merge-Package.cmd','release-notes.md'):
     if (ROOT/'setup'/name).exists():shutil.copy2(ROOT/'setup'/name,BASE/name)
 electron=Path('D:/dev/营销浏览器/GeekezBrowser/node_modules/electron/dist')
 shutil.copytree(electron,PACKAGE,dirs_exist_ok=True,copy_function=safe_copy)

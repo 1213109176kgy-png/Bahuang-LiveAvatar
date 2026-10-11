@@ -35,7 +35,7 @@ if check.returncode:
     subprocess.run(['gh','release','create','v0.3.0','--repo',REPO,'--title','八荒实时数字人 v0.3.0 · Windows 免费开源版','--notes-file',str(notes),'--draft','--target','main'],env=env,check=True)
 if args.upload:
     manifest=json.loads((BASE/'release-manifest.json').read_text())
-    assets=[BASE/x['file'] for x in manifest['parts']]+[BASE/x for x in ('合并整合包.cmd','Merge-Package.ps1','release-manifest.json','SHA256SUMS.txt')]
+    assets=[BASE/x['file'] for x in manifest['parts']]+[BASE/x for x in ('Merge-Package.cmd','Merge-Package.ps1','release-manifest.json','SHA256SUMS.txt')]
     release=json.loads(run(['gh','release','view','v0.3.0','--repo',REPO,'--json','assets']))
     uploaded={a['name']:a['size'] for a in release['assets']}
     for file in assets:

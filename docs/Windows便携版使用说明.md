@@ -1,6 +1,6 @@
 # 数字人工作台 · Windows 便携版
 
-GitHub 发布版：下载全部 `.zip.001` 等分卷、`合并整合包.cmd`、`Merge-Package.ps1` 和 `release-manifest.json`，放在同一文件夹，双击“合并整合包.cmd”，校验并合并后解压 ZIP。
+GitHub 发布版：下载全部 `.zip.001` 等分卷、`Merge-Package.cmd`、`Merge-Package.ps1` 和 `release-manifest.json`，放在同一文件夹，双击“Merge-Package.cmd”，校验并合并后解压 ZIP。
 
 首次启动会提示导入 Wav2Lip256 权重。公开包未附带授权不明确的口型权重，请按启动窗口的官方说明获取并选择对应 `.pth` 文件。已附带本地对话、语音识别、预设音色和参考录音克隆模型；无需另外安装 Python。
 

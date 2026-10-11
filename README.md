@@ -22,7 +22,7 @@
 ## Windows 整合包使用
 
 1. 到 [Releases](https://github.com/1213109176kgy-png/Bahuang-LiveAvatar/releases/latest) 下载全部同版本分卷及合并脚本，放在同一个文件夹。
-2. 对于 `.zip.001` 等分卷，运行 **合并整合包.cmd**，再解压生成的 ZIP。不能只下载一个分卷，也不要只移动 EXE。
+2. 对于 `.zip.001` 等分卷，运行 **Merge-Package.cmd**，再解压生成的 ZIP。不能只下载一个分卷，也不要只移动 EXE。
 3. 双击 **数字人工作台.exe**。首次会提示导入 **wav2lip256.pth**，请从 [LiveTalking 官方说明](https://github.com/lipku/LiveTalking#2-快速开始) 获取。公开包不附带该权重，避免再分发授权不明的模型文件。
 4. 等三个服务就绪后，点击人物画面内的 **视频通话**，允许麦克风权限，拨号完成后开始聊天。
 5. “数字人配置”修改人物、声音和角色；“模型配置”填写在线接口、模型及 API Key。提示需要重启时，点击“重启服务”。

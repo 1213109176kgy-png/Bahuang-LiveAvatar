@@ -4,8 +4,8 @@ Windows 免费开源版：视频通话界面、3 秒拨打动画、自动开启�
 
 ## 下载与启动
 
-1. 下载全部 `Bahuang-LiveAvatar-Windows-v0.3.0.zip.001` 等分卷，以及 `合并整合包.cmd`、`Merge-Package.ps1`、`release-manifest.json`，放到同一文件夹。
-2. 双击“合并整合包.cmd”，自动校验、合并，再解压 ZIP。
+1. 下载全部 `Bahuang-LiveAvatar-Windows-v0.3.0.zip.001` 等分卷，以及 `Merge-Package.cmd`、`Merge-Package.ps1`、`release-manifest.json`，放到同一文件夹。
+2. 双击“Merge-Package.cmd”，自动校验、合并，再解压 ZIP。
 3. 双击“数字人工作台.exe”。首次启动按提示从 LiveTalking 官方渠道获取并导入 Wav2Lip256 权重。
 4. 等服务就绪，点击“视频通话”，允许麦克风访问，开始与小爱交流。
 
