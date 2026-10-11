@@ -1,6 +1,6 @@
 """Publish clean release using the existing Git credential helper; never print tokens."""
 from pathlib import Path
-import argparse,json,os,subprocess
+import argparse,json,os,subprocess,time
 import requests
 ROOT=Path(__file__).resolve().parents[1]
 BASE=ROOT/'dist/public-v0.3.0';SOURCE=BASE/'source'
@@ -36,9 +36,20 @@ if check.returncode:
 if args.upload:
     manifest=json.loads((BASE/'release-manifest.json').read_text())
     assets=[BASE/x['file'] for x in manifest['parts']]+[BASE/x for x in ('合并整合包.cmd','Merge-Package.ps1','release-manifest.json','SHA256SUMS.txt')]
+    release=json.loads(run(['gh','release','view','v0.3.0','--repo',REPO,'--json','assets']))
+    uploaded={a['name']:a['size'] for a in release['assets']}
     for file in assets:
+        if uploaded.get(file.name)==file.stat().st_size:
+            print('Already uploaded '+file.name,flush=True);continue
         print('Uploading '+file.name,flush=True)
-        subprocess.run(['gh','release','upload','v0.3.0',str(file),'--repo',REPO,'--clobber'],env=env,check=True)
+        for attempt in range(3):
+            result=subprocess.run(['gh','release','upload','v0.3.0',str(file),'--repo',REPO,'--clobber'],env=env)
+            if result.returncode==0:break
+            if attempt==2:raise RuntimeError('Upload failed: '+file.name)
+            print('Retrying '+file.name,flush=True);time.sleep(5)
+    release=json.loads(run(['gh','release','view','v0.3.0','--repo',REPO,'--json','assets']))
+    uploaded={a['name']:a['size'] for a in release['assets']}
+    assert all(uploaded.get(f.name)==f.stat().st_size for f in assets),'Remote assets incomplete'
     subprocess.run(['gh','release','edit','v0.3.0','--repo',REPO,'--draft=false','--latest'],env=env,check=True)
     print('Published https://github.com/'+REPO+'/releases/tag/v0.3.0',flush=True)
 else:print('Draft release ready; assets not yet uploaded.',flush=True)
