@@ -1,0 +1,8 @@
+{
+  "name": "livegirl-desktop",
+  "version": "0.3.0",
+  "productName": "数字人工作台",
+  "description": "可配置的本地互动数字人 Windows 工作台",
+  "main": "main.js",
+  "private": true
+}

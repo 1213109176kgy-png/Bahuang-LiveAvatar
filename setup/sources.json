@@ -1,0 +1,39 @@
+[
+  {
+    "license": "Apache-2.0",
+    "source": "https://github.com/lipku/LiveTalking",
+    "commit": "eaa2b91559a5c2ed6127e17728efd52b7c407a0d",
+    "project": "LiveTalking"
+  },
+  {
+    "source": "https://github.com/huggingface/speech-to-speech",
+    "commit": "66808782242e66cb4daef812548984bde598cd0d",
+    "usage": "reference source",
+    "project": "speech-to-speech"
+  },
+  {
+    "cuda": "12.4",
+    "commit": "f2918cabb",
+    "source": "https://github.com/ggml-org/llama.cpp",
+    "release": "b11541",
+    "project": "llama.cpp"
+  },
+  {
+    "revision": "bc640142c66e1fdd12af0bd68f40445458f3869b",
+    "source": "https://huggingface.co/Qwen/Qwen3-4B-GGUF",
+    "project": "Qwen3-4B-GGUF"
+  },
+  {
+    "source": "https://github.com/QwenLM/Qwen3-TTS",
+    "commit": "022e286b98fbec7e1e916cb940cdf532cd9f488e",
+    "project": "Qwen3-TTS"
+  },
+  {
+    "license": "MIT",
+    "project": "faster-qwen3-tts",
+    "tag": "0.2.6",
+    "usage": "CUDA graph acceleration, direct source import",
+    "source": "https://github.com/andimarafioti/faster-qwen3-tts",
+    "commit": "5ae964a39fadec39141db779f5c5e4768ddd2b22"
+  }
+]
