@@ -4,7 +4,7 @@ const path = require('node:path');
 const { spawn } = require('node:child_process');
 const ROOT = fs.existsSync(path.join(path.dirname(process.execPath), 'app/server.py')) ? path.dirname(process.execPath) : path.resolve(__dirname, '..');
 const children = new Map();
-let win, shuttingDown = false, starting = false;
+let win, controlServer, shuttingDown = false, starting = false;
 const readConfig = () => JSON.parse(fs.readFileSync(path.join(ROOT, 'config/local.json'), 'utf8').replace(/^\uFEFF/, ''));
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 const portUrl = () => `http://127.0.0.1:${readConfig().web_port || 7860}`;
@@ -108,8 +108,15 @@ else {
     ipcMain.handle('logs',event=>{trusted(event);const names=['windows-voice.log','windows-avatar.log','windows-llama.log'];return names.map(name=>({name,text:fs.existsSync(path.join(ROOT,'logs',name))?fs.readFileSync(path.join(ROOT,'logs',name),'utf8').slice(-16000):'暂无日志'}));});
     ipcMain.handle('open-external',async(event,url)=>{trusted(event);const target=new URL(url);if(target.protocol!=='https:' || target.username || target.password || !['huggingface.co','www.runninghub.cn'].includes(target.hostname))throw new Error('不支持的外部链接');await shell.openExternal(target.href);return {ok:true};});
     await win.loadFile(path.join(__dirname,'loading.html'));
+    try {
+      controlServer = await require('./service-control').listen({webPort:()=>readConfig().web_port || 7860,perform:async action=>{
+        await stopServices();
+        if(action==='restart'){await wait(1000);return startServices();}
+        return {ok:true};
+      }});
+    } catch(error) {win.webContents.send('service-error','浏览器服务控制不可用：'+error.message);}
     const started=await startServices();if(!started.ok)win.webContents.send('service-error',started.message);
   });
   app.on('window-all-closed',()=>{stopServices().finally(()=>app.quit());});
-  app.on('before-quit',()=>{for(const child of children.values())child.kill();});
+  app.on('before-quit',()=>{controlServer?.close();for(const child of children.values())child.kill();});
 }

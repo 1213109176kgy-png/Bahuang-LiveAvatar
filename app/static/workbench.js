@@ -66,7 +66,18 @@ let previewAudio=null,previewUrl=null;
 function previewLabel(playing){element('previewVoice').textContent=playing?'❚❚ 暂停试听':'▶ 试听已保存音色';element('previewVoice').setAttribute('aria-pressed',String(playing));}
 element('previewVoice').onclick=async()=>{const button=element('previewVoice');stopPreset();if(previewAudio){if(previewAudio.paused){await previewAudio.play();previewLabel(true);}else{previewAudio.pause();previewLabel(false);}return;}button.disabled=true;button.textContent='正在生成试听…';try{const response=await fetch('/api/test/tts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:'你好，很高兴认识你。欢迎来到我的直播间。'})});if(!response.ok)throw new Error('试听失败，请确认已保存正确配置且语音模型就绪');previewUrl=URL.createObjectURL(await response.blob());previewAudio=new Audio(previewUrl);if(window.appConfig.speaker_device&&previewAudio.setSinkId)await previewAudio.setSinkId(window.appConfig.speaker_device);previewAudio.onended=()=>{URL.revokeObjectURL(previewUrl);previewAudio=null;previewUrl=null;previewLabel(false);};await previewAudio.play();previewLabel(true);}catch(error){if(previewUrl)URL.revokeObjectURL(previewUrl);previewAudio=null;previewUrl=null;previewLabel(false);toast(error.message);}finally{button.disabled=false;}};
 window.addEventListener('settings-saved',()=>{if(previewAudio){previewAudio.pause();previewAudio=null;}if(previewUrl)URL.revokeObjectURL(previewUrl);previewUrl=null;previewLabel(false);});
-for(const[action,id]of[['restart','restartServices'],['stop','stopServices']])element(id).onclick=async()=>{if(!window.desktop)return toast('服务控制请在 Windows 桌面工作台中操作。');element(id).disabled=true;try{toast(action==='restart'?'正在重启，页面会自动恢复。':'正在停止本地服务…');const result=await window.desktop.services(action);if(!result.ok)toast(result.message);if(action==='stop')element('restartServices').disabled=false;}finally{element(id).disabled=false;}};
+for(const[action,id]of[['restart','restartServices'],['stop','stopServices']])element(id).onclick=async()=>{
+ element('stopServices').disabled=element('restartServices').disabled=true;
+ try{
+  toast(action==='restart'?'正在重启，页面会自动恢复。':'正在停止本地服务…');
+  const result=window.desktop?await window.desktop.services(action):await api('http://127.0.0.1:17860/services',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action})});
+  if(!result.ok)throw new Error(result.message||'服务操作失败');
+  window.dispatchEvent(new Event('services-stopped'));
+  if(action==='stop')toast('本地服务已停止。点击“重启服务”即可恢复，请保持桌面工作台打开。');
+  else if(!window.desktop)location.reload();
+ }catch(error){toast('服务操作失败：'+(error.message==='Failed to fetch'?'请先打开项目的 Windows 桌面工作台，再在此页面停止或重启服务。':error.message));}
+ finally{element('stopServices').disabled=element('restartServices').disabled=false;}
+};
 element('showLogs').onclick=async()=>{if(!window.desktop)return toast('运行日志保存在整合包 logs 文件夹；桌面版可直接查看。');element('logContent').textContent=(await window.desktop.logs()).map(x=>x.name+'\n'+x.text).join('\n\n');element('logDialog').showModal();};element('closeLogs').onclick=()=>element('logDialog').close();window.desktop?.onError(toast);
 (async()=>{try{const data=await api('/api/config');window.appConfig=data.values;keyState=data.keys;selectedAvatar=data.values.avatar_id;catalog=await api('/api/catalog');renderForms();renderAvatars();updatePreview();devices();window.dispatchEvent(new Event('settings-loaded'));}catch(error){toast('读取配置失败：'+error.message);}})();setInterval(pollJobs,5000);navigator.mediaDevices?.addEventListener('devicechange',devices);
 

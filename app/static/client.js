@@ -131,3 +131,10 @@ let connectedAvatar='';
 video.addEventListener('loadeddata',()=>{connectedAvatar=window.appConfig.avatar_id;$('previewLabel').textContent='实时画面 · 动态底片';$('avatarPreview').style.visibility='hidden';if(video.setSinkId)video.setSinkId(window.appConfig.speaker_device||'').catch(()=>window.toast?.('播放设备不可用，继续使用默认设备。'));});
 window.addEventListener('settings-saved',()=>{if(peer&&connectedAvatar&&connectedAvatar!==window.appConfig.avatar_id){disconnect();setTimeout(connect,800);}if(video.setSinkId)video.setSinkId(window.appConfig.speaker_device||'').catch(()=>{});});
 window.addEventListener('settings-loaded',()=>refresh());
+window.addEventListener('services-stopped',async()=>{
+  dialing=false;
+  if(recording)await toggleMicrophone();
+  disconnect();
+  socket?.close();
+  phase('本地服务已停止');
+});
