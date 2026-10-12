@@ -6,6 +6,8 @@
 
 **免费开源版｜中文界面｜Windows 便携运行｜源码可修改**
 
+[GitHub 源码](https://github.com/1213109176kgy-png/Bahuang-LiveAvatar) · [Gitee 源码](https://gitee.com/kugou8/Bahuang-LiveAvatar)
+
 [百度网盘下载完整包](https://pan.baidu.com/s/1-7I4bplakJf1rqQxR1qSuw?pwd=2tza)（提取码 `2tza`） · [使用说明](docs/Windows便携版使用说明.md) · [开发说明](docs/开发说明.md) · [第三方许可](THIRD_PARTY_NOTICES.md)
 
 ## 功能
