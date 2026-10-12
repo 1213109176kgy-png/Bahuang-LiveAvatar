@@ -45,6 +45,46 @@
 
 [GitHub Releases](https://github.com/1213109176kgy-png/Bahuang-LiveAvatar/releases/latest) 仍保留 v0.3.0 分卷发布，它与百度网盘 v0.3.1 完整包不同：旧版需要合并分卷，且未附带 Wav2Lip256 权重，首次运行需按提示自行导入。希望直接解压体验的用户请优先下载上面的网盘完整包。
 
+## 效果视频与界面截图
+
+以下为开发测试阶段的实际截图和原始录屏。录屏保留现场声音与测试画面，当前完整整合包版本为 v0.3.1。
+
+### 视频 1：工作台互动录屏（约 32 秒）
+
+[![工作台互动录屏，点击打开视频](docs/media/demo-01.jpg)](docs/media/demo-01.mp4)
+
+[打开或下载视频 1（MP4，含声音）](docs/media/demo-01.mp4)
+
+### 视频 2：全屏通话录屏（约 65 秒）
+
+[![全屏通话录屏，点击打开视频](docs/media/demo-02.jpg)](docs/media/demo-02.mp4)
+
+[打开或下载视频 2（MP4，含声音）](docs/media/demo-02.mp4)
+
+点击视频封面或下方链接即可进入视频文件；若平台未提供在线播放，可下载 MP4 后观看。
+
+### 界面截图
+
+**控制台：视频通话入口**
+
+![控制台：视频通话入口](docs/media/console-idle.png)
+
+**实时通话：人物画面与对话记录**
+
+![实时通话：人物画面与对话记录](docs/media/console-call.png)
+
+**人物形象：上传、改名、默认与备用底片**
+
+![人物形象：上传、改名、默认与备用底片](docs/media/avatar-settings.png)
+
+**声音与人设：录音克隆、角色提示词和收音参数**
+
+![声音与人设：录音克隆、角色提示词和收音参数](docs/media/voice-personality.png)
+
+**模型配置：本地与在线接口**
+
+![模型配置：本地与在线接口](docs/media/model-settings.png)
+
 ## 技术路线
 
 ```text
